@@ -11,14 +11,20 @@ DATA_DIR_PATH = os.path.join(
 )
 
 MP3_FILE_PATH = DATA_DIR_PATH + '/speech_origin.mp3'
-SPLITTED_FILE_FILE = DATA_DIR_PATH + '/output0.flac'
-RESULT_FILE_PATH = DATA_DIR_PATH + 'result.json'
+FLAC_FILE_PATH = DATA_DIR_PATH + '/speech.flac'
 
 client = speech.SpeechClient()
 
 
-def speech_to_text(speech_flac_file):
-    """Transcribe the given audio file."""
+def speech_to_text(speech_flac_file: str) -> str:
+    """音声ファイルの文字おこしをする
+
+    Args:
+        speech_flac_file (str): flac形式の音声ファイルパス
+
+    Returns:
+        str: 文字お越し結果
+    """
 
     with io.open(speech_flac_file, 'rb') as audio_file:
         content = audio_file.read()
@@ -37,15 +43,23 @@ def speech_to_text(speech_flac_file):
         print(result.alternatives[0].transcript)
 
 
-def convert_mp3_to_flac(file_path):
-    sound = AudioSegment.from_mp3(file_path)
+def convert_mp3_to_flac(mp3_file_path: str) -> str:
+    """mp3形式の音声ファイルをモノラルのflac音声ファイルに変換する
+
+    Args:
+        mp3_file_path (str): mp3形式の音声ファイルパス
+
+    Returns:
+        str: flac形式の音声ファイルパス
+    """
+    sound = AudioSegment.from_mp3(mp3_file_path)
 
     sound.export(
-        SPLITTED_FILE_FILE,
+        FLAC_FILE_PATH,
         format="flac",
         parameters=["-ac", "1"])
 
-    return SPLITTED_FILE_FILE
+    return FLAC_FILE_PATH
 
 
 if __name__ == "__main__":
@@ -53,4 +67,4 @@ if __name__ == "__main__":
         MP3_FILE_PATH
     )
 
-    speech_to_text(SPLITTED_FILE_FILE)
+    speech_to_text(speech_flac_file)
