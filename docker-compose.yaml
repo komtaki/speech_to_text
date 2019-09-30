@@ -1,0 +1,8 @@
+version: '3.7'
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app/speech_to_text
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: '/app/speech_to_text/config/secret.json'
