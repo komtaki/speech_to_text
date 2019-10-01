@@ -29,7 +29,7 @@ class SpeechToText:
         audio = types.RecognitionAudio(content=content)
         config = self.create_config()
 
-        self.parse_response(
+        self.print_response(
             client.recognize(config, audio)
         )
 
@@ -47,11 +47,11 @@ class SpeechToText:
 
         print('Waiting for operation to complete...')
 
-        self.parse_response(
+        self.print_response(
             operation.result(timeout=90)
         )
 
-    def parse_response(self, response):
+    def print_response(self, response):
         for result in response.results:
             print(u'Transcript: {}'.format(result.alternatives[0].transcript))
             print('Confidence: {}'.format(result.alternatives[0].confidence))
