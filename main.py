@@ -3,8 +3,9 @@ from google.cloud.speech import types
 from google.cloud.speech import enums
 from google.cloud import speech
 import io
+import os
 
-MP3_FILE_PATH = 'data/origin3.mp3'
+DEFAULT_MP3_FILE_PATH = 'data/origin.mp3'
 
 client = speech.SpeechClient()
 
@@ -80,7 +81,7 @@ def convert_mp3_to_flac(mp3_file_path: str) -> str:
 
 if __name__ == "__main__":
     speech_flac_file = convert_mp3_to_flac(
-        MP3_FILE_PATH
+        os.environ.get("MP3_FILE_PATH", DEFAULT_MP3_FILE_PATH)
     )
 
     speech_to_text = SpeechToText()
